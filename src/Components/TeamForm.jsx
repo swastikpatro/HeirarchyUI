@@ -2,11 +2,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useState } from 'react';
 
+import { v4 as uuid } from 'uuid';
+
 import { Box, Card, Input, Text, Tooltip, useToast } from '@chakra-ui/react';
 
-import { AiOutlineClear } from 'react-icons/ai';
 import { CgClose } from 'react-icons/cg';
 import { HiCheck } from 'react-icons/hi';
+import { BsBoxArrowLeft } from 'react-icons/bs';
 
 import {
   bottomTextStyles,
@@ -56,7 +58,13 @@ const TeamForm = ({ isAddingTeamAndData, isEditingTeamAndData }) => {
   const clearInput = () => setTeamName('');
 
   const closeInput = () => {
-    dispatch(closeTeamEditForm());
+    if (isEditingTeamAndData) {
+      dispatch(closeTeamEditForm());
+    }
+
+    if (isAddingTeamAndData) {
+      isAddingTeamAndData.closeAddingTeamForm();
+    }
   };
 
   const handleCheck = () => {
@@ -78,7 +86,7 @@ const TeamForm = ({ isAddingTeamAndData, isEditingTeamAndData }) => {
       return;
     }
 
-    if (isEditingTeamAndData.teamName === inputTeamNameTrimmed) {
+    if (isEditingTeamAndData?.teamName === inputTeamNameTrimmed) {
       closeInput();
       return;
     }
@@ -97,12 +105,19 @@ const TeamForm = ({ isAddingTeamAndData, isEditingTeamAndData }) => {
         message: 'Successfully Editted Team Name',
       });
     } else {
-      // dispatch(
-      //   // addTeamInfo({
-      //   //   teamId: ,
-      //   //   teamName: teamNameTrimmed,
-      //   // })
-      // );
+      dispatch(
+        addTeamInfo({
+          id: uuid(),
+          teamName: inputTeamNameTrimmed,
+          department: isAddingTeamAndData.department,
+          employeesUnder: [],
+        })
+      );
+      showToast({
+        toast,
+        type: TOAST_TYPE.Success,
+        message: 'Successfully Added New Team',
+      });
     }
 
     closeInput();
@@ -150,13 +165,13 @@ const TeamForm = ({ isAddingTeamAndData, isEditingTeamAndData }) => {
 
             <Tooltip label="Close Input" {...tooltipStyle}>
               <Box onClick={closeInput} as="span" {...iconStyle}>
-                <CgClose />
+                <BsBoxArrowLeft />
               </Box>
             </Tooltip>
 
             <Tooltip label="Clear Input" {...tooltipStyle}>
               <Box onClick={clearInput} as="span" {...iconStyle}>
-                <AiOutlineClear />
+                <CgClose />
               </Box>
             </Tooltip>
           </Box>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, Card, Heading, Text, Tooltip, useToast } from '@chakra-ui/react';
 
 import { BsTrash, BsPencil } from 'react-icons/bs';
-import { AiOutlineInfoCircle } from 'react-icons/ai';
+import { AiOutlineInfoCircle, AiOutlinePlusCircle } from 'react-icons/ai';
 import { HiArrowNarrowUp } from 'react-icons/hi';
 
 import {
@@ -18,6 +18,7 @@ import { showToast } from '../utils/utils';
 import { TOAST_TYPE } from '../constants';
 
 import {
+  closeTeamEditForm,
   promoteEmployeeInTeam,
   removeEmployeeFromTeam,
 } from '../store/employeeTreeSlice';
@@ -25,12 +26,14 @@ import {
 import Team from './Team';
 import MenuTeamChange from './MenuTeamChange';
 import TeamForm from './TeamForm';
+import { useEffect, useState } from 'react';
 
 const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
   const dispatch = useDispatch();
   const toast = useToast();
 
   const allTeamsFromStore = useSelector(store => store.employeeTree.allTeams);
+
   const idOfTeamToEditFromStore = useSelector(
     store => store.employeeTree.idOfTeamToEdit
   );
@@ -47,6 +50,7 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
   const { employeeName, employeePhone, employeeEmail } = employeeInfo;
 
   const isHeadOfDepartmentAndHasTeams = !!employeeData?.teamsUnder;
+  const [isAddingTeam, setIsAddingTeam] = useState(false);
 
   // start: for change Team
   const availableTeamsToMove = allTeamsFromStore.filter(
@@ -58,6 +62,17 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
   const isChangeTeamDisable =
     hasOneOrNoMemberInTeam || availableTeamsToMove.length <= 0;
   // end: for change Team
+
+  const toggleIsAddingTeam = () => {
+    const isAnyTeamCurrentlyEditingAndNowAdd =
+      !isAddingTeam & !!idOfTeamToEditFromStore;
+
+    if (isAnyTeamCurrentlyEditingAndNowAdd) {
+      dispatch(closeTeamEditForm());
+    }
+
+    setIsAddingTeam(!isAddingTeam);
+  };
 
   const handleDeleteMember = () => {
     if (hasOneOrNoMemberInTeam) {
@@ -97,6 +112,12 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
       message: `Successfully Promoted '${employeeName}'`,
     });
   };
+
+  useEffect(() => {
+    if (!!idOfTeamToEditFromStore && isAddingTeam) {
+      setIsAddingTeam(false);
+    }
+  }, [idOfTeamToEditFromStore]);
 
   const uiForMembersJSX = (
     <>
@@ -152,6 +173,14 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
               </Box>
             </Tooltip>
 
+            {!isAddingTeam && isHeadOfDepartmentAndHasTeams && (
+              <Tooltip label="Add Team" {...tooltipStyle}>
+                <Box onClick={toggleIsAddingTeam} as="span" {...iconStyle}>
+                  <AiOutlinePlusCircle />
+                </Box>
+              </Tooltip>
+            )}
+
             {isMember && uiForMembersJSX}
           </Box>
         </Box>
@@ -165,8 +194,9 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
         ml={{ base: '.25rem', md: '.5rem', lg: '.75rem' }}
         borderLeft={'2px solid black'}
       >
-        {isHeadOfDepartmentAndHasTeams
-          ? employeeData.teamsUnder.map(singleTeam =>
+        {isHeadOfDepartmentAndHasTeams ? (
+          <>
+            {employeeData.teamsUnder.map(singleTeam =>
               singleTeam.id === idOfTeamToEditFromStore ? (
                 <TeamForm
                   key={singleTeam.id}
@@ -175,10 +205,22 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
               ) : (
                 <Team key={singleTeam.id} teamData={singleTeam} />
               )
-            )
-          : employeesUnder.map(singleEmployee => (
-              <Employee key={singleEmployee.id} employeeData={singleEmployee} />
-            ))}
+            )}
+
+            {isAddingTeam && (
+              <TeamForm
+                isAddingTeamAndData={{
+                  department: employeeDepartment,
+                  closeAddingTeamForm: toggleIsAddingTeam,
+                }}
+              />
+            )}
+          </>
+        ) : (
+          employeesUnder.map(singleEmployee => (
+            <Employee key={singleEmployee.id} employeeData={singleEmployee} />
+          ))
+        )}
       </Box>
     </>
   );
