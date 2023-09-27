@@ -78,6 +78,11 @@ const TeamForm = ({ isAddingTeamAndData, isEditingTeamAndData }) => {
       return;
     }
 
+    if (isEditingTeamAndData.teamName === inputTeamNameTrimmed) {
+      closeInput();
+      return;
+    }
+
     if (isEditingTeamAndData) {
       dispatch(
         editTeamInfo({
