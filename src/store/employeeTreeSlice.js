@@ -110,6 +110,21 @@ const editTeamNode = ({ node, teamId, teamName }) => {
   );
 };
 
+const addTeamNode = ({ node, teamInfoToAdd }) => {
+  const isHeadOfDepartment = 'teamsUnder' in node;
+
+  if (isHeadOfDepartment && node.department === teamInfoToAdd.department) {
+    node.teamsUnder.push(teamInfoToAdd);
+    return;
+  }
+
+  const teamsListElseEmployeesList = node?.teamsUnder ?? node.employeesUnder;
+
+  teamsListElseEmployeesList.forEach(singleNode =>
+    addTeamNode({ node: singleNode, teamInfoToAdd })
+  );
+};
+
 export const employeeTreeSlice = createSlice({
   name: 'employeeTree',
   initialState: {
@@ -161,7 +176,11 @@ export const employeeTreeSlice = createSlice({
       state.allTeams = getTeams(state.employeesData);
     },
 
-    addTeamInfo: (state, { payload }) => {},
+    addTeamInfo: (state, { payload }) => {
+      addTeamNode({ node: state.employeesData, teamInfoToAdd: payload });
+
+      state.allTeams = getTeams(state.employeesData);
+    },
   },
 });
 
