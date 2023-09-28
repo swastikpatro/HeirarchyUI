@@ -8,7 +8,6 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
-import { ellipsisStyle } from '../globalStyle';
 
 const DisplayEmployeeInfoModal = ({
   isOpen,
@@ -36,7 +35,12 @@ const DisplayEmployeeInfoModal = ({
               Name:{' '}
             </Box>
 
-            <Box {...ellipsisStyle} as="span">
+            <Box
+              as="span"
+              // for bigger names
+              maxH="4rem"
+              overflow={'auto'}
+            >
               {employeeName}
             </Box>
           </Text>
@@ -46,9 +50,7 @@ const DisplayEmployeeInfoModal = ({
               Position:{' '}
             </Box>
 
-            <Box {...ellipsisStyle} as="span">
-              {position}
-            </Box>
+            <Box as="span">{position}</Box>
           </Text>
 
           {!!department && (
@@ -57,9 +59,7 @@ const DisplayEmployeeInfoModal = ({
                 Department:{' '}
               </Box>
 
-              <Box {...ellipsisStyle} as="span">
-                {department}
-              </Box>
+              <Box as="span">{department}</Box>
             </Text>
           )}
 
@@ -68,7 +68,12 @@ const DisplayEmployeeInfoModal = ({
               Email:{' '}
             </Box>
 
-            <Box {...ellipsisStyle} as="span">
+            <Box
+              as="span"
+              // for bigger emails
+              maxH="4rem"
+              overflow={'auto'}
+            >
               {employeeEmail}
             </Box>
           </Text>
@@ -78,9 +83,7 @@ const DisplayEmployeeInfoModal = ({
               Phone:{' '}
             </Box>
 
-            <Box {...ellipsisStyle} as="span">
-              {employeePhone}
-            </Box>
+            <Box as="span">{employeePhone}</Box>
           </Text>
         </ModalBody>
       </ModalContent>
