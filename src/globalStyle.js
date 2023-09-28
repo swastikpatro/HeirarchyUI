@@ -10,7 +10,6 @@ export const headingStyles = {
   fontSize: 'lg',
   letterSpacing: '1px',
   fontWeight: 'bold',
-  mb: '.5rem',
 };
 
 export const tooltipStyle = {
@@ -36,6 +35,7 @@ export const cardCenter = {
   gap: '1rem',
   alignItems: 'center',
   justifyContent: 'space-between',
+  mb: '.5rem',
 };
 
 export const bottomTextStyles = {

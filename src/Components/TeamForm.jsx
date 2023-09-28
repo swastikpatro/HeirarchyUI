@@ -131,7 +131,7 @@ const TeamForm = ({
     <>
       <Card as="article" {...cardStyles}>
         <Box as="div" {...cardCenter}>
-          <Box as="div" mb=".5rem">
+          <Box as="div">
             <Input
               outlineColor="transparent"
               borderWidth="2px"
