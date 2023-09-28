@@ -37,6 +37,7 @@ import Team from './Team';
 import MenuTeamChange from './MenuTeamChange';
 import TeamForm from './TeamForm';
 import FormEmployeeInfoModal from './FormEmployeeInfoModal';
+import DisplayEmployeeInfoModal from './DisplayEmployeeInfoModal';
 
 const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
   const dispatch = useDispatch();
@@ -197,10 +198,22 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
             columnGap={{ base: '.35rem', md: '.5rem' }}
           >
             <Tooltip label="Info" {...tooltipStyle}>
-              <Box as="span" {...iconStyle}>
+              <Box
+                as="span"
+                {...iconStyle}
+                onClick={onDisplayEmployeeInfoModalOpen}
+              >
                 <AiOutlineInfoCircle />
               </Box>
             </Tooltip>
+
+            {isDisplayEmployeeInfoModalOpen && (
+              <DisplayEmployeeInfoModal
+                isOpen={isDisplayEmployeeInfoModalOpen}
+                onClose={onDisplayEmployeeInfoModalClose}
+                employeeDataToDisplay={employeeData}
+              />
+            )}
 
             {!isAddingTeam && isHeadOfDepartmentAndHasTeams && (
               <Tooltip label="Add Team" {...tooltipStyle}>
