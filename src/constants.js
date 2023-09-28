@@ -5,6 +5,8 @@ export const TOAST_TYPE = {
   Info: 'info',
 };
 
+export const PHONE_REGEX = /^\+91-\d{10}$/;
+
 export const employeesDataLocal = {
   id: 1,
   position: 'CEO',
@@ -12,7 +14,7 @@ export const employeesDataLocal = {
   department: null,
   employeeInfo: {
     employeeName: 'Swastik Patro',
-    employeePhone: '9082931945',
+    employeePhone: '+91-9082931945',
     employeeEmail: 'swastik.patro2001@gmail.com',
   },
   employeesUnder: [
@@ -23,7 +25,7 @@ export const employeesDataLocal = {
       department: 'staff',
       employeeInfo: {
         employeeName: 'Jayesh',
-        employeePhone: '9082933545',
+        employeePhone: '+91-9082933545',
         employeeEmail: 'jayesh@gmail.com',
       },
       employeesUnder: [],
@@ -40,7 +42,7 @@ export const employeesDataLocal = {
               department: 'staff',
               employeeInfo: {
                 employeeName: 'Ram',
-                employeePhone: '9273112937',
+                employeePhone: '+91-9273112937',
                 employeeEmail: 'ram@gmail.com',
               },
               employeesUnder: [],
@@ -52,7 +54,7 @@ export const employeesDataLocal = {
               department: 'staff',
               employeeInfo: {
                 employeeName: 'Laxman',
-                employeePhone: '9084431941',
+                employeePhone: '+91-9084431941',
                 employeeEmail: 'laxman@gmail.com',
               },
               employeesUnder: [],
@@ -71,7 +73,7 @@ export const employeesDataLocal = {
               department: 'staff',
               employeeInfo: {
                 employeeName: 'Krishna',
-                employeePhone: '98253112937',
+                employeePhone: '+91-98253112937',
                 employeeEmail: 'krishna@gmail.com',
               },
               employeesUnder: [],
@@ -83,7 +85,7 @@ export const employeesDataLocal = {
               department: 'staff',
               employeeInfo: {
                 employeeName: 'Vitthal',
-                employeePhone: '9084432222',
+                employeePhone: '+91-9084432222',
                 employeeEmail: 'vitthal@gmail.com',
               },
               employeesUnder: [],
@@ -99,7 +101,7 @@ export const employeesDataLocal = {
       department: 'engineering',
       employeeInfo: {
         employeeName: 'Naresh',
-        employeePhone: '9273932937',
+        employeePhone: '+91-9273932937',
         employeeEmail: 'naresh@gmail.com',
       },
       employeesUnder: [],
@@ -116,7 +118,7 @@ export const employeesDataLocal = {
               department: 'engineering',
               employeeInfo: {
                 employeeName: 'Gopal',
-                employeePhone: '9233882937',
+                employeePhone: '+91-9233882937',
                 employeeEmail: 'gopal@gmail.com',
               },
               employeesUnder: [],
@@ -128,7 +130,7 @@ export const employeesDataLocal = {
               department: 'engineering',
               employeeInfo: {
                 employeeName: 'Govinda',
-                employeePhone: '9089931941',
+                employeePhone: '+91-9089931941',
                 employeeEmail: 'govinda@gmail.com',
               },
               employeesUnder: [],
@@ -147,7 +149,7 @@ export const employeesDataLocal = {
               department: 'engineering',
               employeeInfo: {
                 employeeName: 'Mohan',
-                employeePhone: '9223112337',
+                employeePhone: '+91-9223112337',
                 employeeEmail: 'mohan@gmail.com',
               },
               employeesUnder: [],
@@ -159,7 +161,7 @@ export const employeesDataLocal = {
               department: 'engineering',
               employeeInfo: {
                 employeeName: 'Narayana',
-                employeePhone: '9664431771',
+                employeePhone: '+91-9664431771',
                 employeeEmail: 'narayana@gmail.com',
               },
               employeesUnder: [],
@@ -178,7 +180,7 @@ export const employeesDataLocal = {
               department: 'engineering',
               employeeInfo: {
                 employeeName: 'Vasu',
-                employeePhone: '9003112337',
+                employeePhone: '+91-9003112337',
                 employeeEmail: 'vasu@gmail.com',
               },
               employeesUnder: [],
@@ -190,7 +192,7 @@ export const employeesDataLocal = {
               department: 'engineering',
               employeeInfo: {
                 employeeName: 'Ganesh',
-                employeePhone: '9994431991',
+                employeePhone: '+91-9994431991',
                 employeeEmail: 'ganesh@gmail.com',
               },
               employeesUnder: [],
@@ -206,7 +208,7 @@ export const employeesDataLocal = {
       department: 'design',
       employeeInfo: {
         employeeName: 'Satyanarayan Laxminarayan Subramaniam',
-        employeePhone: '9083531941',
+        employeePhone: '+91-9083531941',
         employeeEmail: 'suresh@gmail.com',
       },
       employeesUnder: [],
@@ -223,7 +225,7 @@ export const employeesDataLocal = {
               department: 'design',
               employeeInfo: {
                 employeeName: 'Jagadish',
-                employeePhone: '9233882911',
+                employeePhone: '+91-9233882911',
                 employeeEmail: 'jagadish@gmail.com',
               },
               employeesUnder: [],
@@ -235,7 +237,7 @@ export const employeesDataLocal = {
               department: 'design',
               employeeInfo: {
                 employeeName: 'Keshav',
-                employeePhone: '9089931922',
+                employeePhone: '+91-9089931922',
                 employeeEmail: 'keshav@gmail.com',
               },
               employeesUnder: [],
