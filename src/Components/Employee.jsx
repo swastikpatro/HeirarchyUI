@@ -69,7 +69,7 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
     isMember,
   } = employeeData;
 
-  const { employeeName, employeePhone, employeeEmail } = employeeInfo;
+  const { employeeName } = employeeInfo;
 
   const isHeadOfDepartmentAndHasTeams = !!employeeData?.teamsUnder;
   const [isAddingTeam, setIsAddingTeam] = useState(false);
