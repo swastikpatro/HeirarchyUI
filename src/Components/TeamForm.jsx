@@ -28,7 +28,10 @@ import Employee from './Employee';
 import { showToast } from '../utils/utils';
 import { TOAST_TYPE } from '../constants';
 
-const TeamForm = ({ isAddingTeamAndData, isEditingTeamAndData }) => {
+const TeamForm = ({
+  isAddingTeamAndData = null,
+  isEditingTeamAndData = null,
+}) => {
   const initialState = isEditingTeamAndData
     ? isEditingTeamAndData.teamName
     : '';
@@ -68,6 +71,8 @@ const TeamForm = ({ isAddingTeamAndData, isEditingTeamAndData }) => {
   };
 
   const handleCheck = () => {
+    let operationToastSuccessMessage = '';
+
     if (!inputTeamNameTrimmed) {
       showToast({
         toast,
@@ -92,19 +97,17 @@ const TeamForm = ({ isAddingTeamAndData, isEditingTeamAndData }) => {
     }
 
     if (isEditingTeamAndData) {
+      operationToastSuccessMessage = 'Successfully Edited Team Name';
+
       dispatch(
         editTeamInfo({
           teamId: isEditingTeamAndData.id,
           teamName: inputTeamNameTrimmed,
         })
       );
-
-      showToast({
-        toast,
-        type: TOAST_TYPE.Success,
-        message: 'Successfully Editted Team Name',
-      });
     } else {
+      operationToastSuccessMessage = 'Successfully Added New Team';
+
       dispatch(
         addTeamInfo({
           id: uuid(),
@@ -113,12 +116,13 @@ const TeamForm = ({ isAddingTeamAndData, isEditingTeamAndData }) => {
           employeesUnder: [],
         })
       );
-      showToast({
-        toast,
-        type: TOAST_TYPE.Success,
-        message: 'Successfully Added New Team',
-      });
     }
+
+    showToast({
+      toast,
+      type: TOAST_TYPE.Success,
+      message: operationToastSuccessMessage,
+    });
 
     closeInput();
   };
