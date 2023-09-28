@@ -1,6 +1,13 @@
-import { Box, Card, Heading, Text, Tooltip } from '@chakra-ui/react';
-
 import { useDispatch } from 'react-redux';
+
+import {
+  Box,
+  Card,
+  Heading,
+  Text,
+  Tooltip,
+  useDisclosure,
+} from '@chakra-ui/react';
 
 import { AiOutlineFilter, AiOutlinePlusCircle } from 'react-icons/ai';
 import { BsPencil } from 'react-icons/bs';
@@ -14,16 +21,23 @@ import {
   iconStyle,
   tooltipStyle,
 } from '../globalStyle';
-import {
-  addEmployeeInTeam,
-  updateIdOfTeamToEdit,
-} from '../store/employeeTreeSlice';
+
+import { updateIdOfTeamToEdit } from '../store/employeeTreeSlice';
+
+import FormEmployeeInfoModal from './FormEmployeeInfoModal';
 
 const Team = ({ teamData }) => {
   const { id: teamId, teamName, department, employeesUnder } = teamData;
   const dispatch = useDispatch();
 
+  const {
+    isOpen: isAddFormEmployeeInfoModalOpen,
+    onOpen: onAddFormEmployeeInfoModalOpen,
+    onClose: onAddFormEmployeeInfoModalClose,
+  } = useDisclosure();
+
   const teamMembersList = employeesUnder.filter(({ isMember }) => isMember);
+
   const hasOneOrNoMemberInTeam = teamMembersList.length <= 1;
 
   return (
@@ -43,29 +57,22 @@ const Team = ({ teamData }) => {
               <Box
                 as="span"
                 {...iconStyle}
-                onClick={() => {
-                  dispatch(
-                    addEmployeeInTeam({
-                      employeeToAdd: {
-                        id: new Date().getTime(),
-                        position: 'Team Member',
-                        isMember: true,
-                        department,
-                        employeeInfo: {
-                          employeeName: 'Ram',
-                          employeePhone: '9273112937',
-                          employeeEmail: 'ram@gmail.com',
-                        },
-                        employeesUnder: [],
-                      },
-                      teamId,
-                    })
-                  );
-                }}
+                onClick={onAddFormEmployeeInfoModalOpen}
               >
                 <AiOutlinePlusCircle />
               </Box>
             </Tooltip>
+
+            {isAddFormEmployeeInfoModalOpen && (
+              <FormEmployeeInfoModal
+                isOpen={isAddFormEmployeeInfoModalOpen}
+                onClose={onAddFormEmployeeInfoModalClose}
+                isAddingEmployeeAndData={{
+                  department,
+                  teamId,
+                }}
+              />
+            )}
 
             <Tooltip label="Edit Info" {...tooltipStyle}>
               <Box
