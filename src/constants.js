@@ -207,7 +207,7 @@ export const employeesDataLocal = {
       isMember: false,
       department: 'design',
       employeeInfo: {
-        employeeName: 'Satyanarayan Laxminarayan Subramaniam',
+        employeeName: 'Satyanarayan Laxminarayan Subramaniam Swamy',
         employeePhone: '+91-9083531941',
         employeeEmail: 'suresh@gmail.com',
       },
