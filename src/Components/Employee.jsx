@@ -1,6 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Box, Card, Heading, Text, Tooltip, useToast } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+
+import {
+  Box,
+  Card,
+  Heading,
+  Text,
+  Tooltip,
+  useDisclosure,
+  useToast,
+} from '@chakra-ui/react';
 
 import { BsTrash, BsPencil } from 'react-icons/bs';
 import { AiOutlineInfoCircle, AiOutlinePlusCircle } from 'react-icons/ai';
@@ -26,11 +36,23 @@ import {
 import Team from './Team';
 import MenuTeamChange from './MenuTeamChange';
 import TeamForm from './TeamForm';
-import { useEffect, useState } from 'react';
+import FormEmployeeInfoModal from './FormEmployeeInfoModal';
+import DisplayEmployeeInfoModal from './DisplayEmployeeInfoModal';
 
 const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
   const dispatch = useDispatch();
   const toast = useToast();
+  const {
+    isOpen: isDisplayEmployeeInfoModalOpen,
+    onOpen: onDisplayEmployeeInfoModalOpen,
+    onClose: onDisplayEmployeeInfoModalClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isEditFormEmployeeInfoModalOpen,
+    onOpen: onEditFormEmployeeInfoModalOpen,
+    onClose: onEditFormEmployeeInfoModalClose,
+  } = useDisclosure();
 
   const allTeamsFromStore = useSelector(store => store.employeeTree.allTeams);
 
@@ -74,6 +96,12 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
     setIsAddingTeam(!isAddingTeam);
   };
 
+  useEffect(() => {
+    if (!!idOfTeamToEditFromStore && isAddingTeam) {
+      setIsAddingTeam(false);
+    }
+  }, [idOfTeamToEditFromStore]);
+
   const handleDeleteMember = () => {
     if (hasOneOrNoMemberInTeam) {
       showToast({
@@ -113,12 +141,6 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
     });
   };
 
-  useEffect(() => {
-    if (!!idOfTeamToEditFromStore && isAddingTeam) {
-      setIsAddingTeam(false);
-    }
-  }, [idOfTeamToEditFromStore]);
-
   const uiForMembersJSX = (
     <>
       <Tooltip label="Promote Employee" {...tooltipStyle}>
@@ -128,10 +150,18 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
       </Tooltip>
 
       <Tooltip label="Update Employee Info" {...tooltipStyle}>
-        <Box as="span" {...iconStyle}>
+        <Box as="span" {...iconStyle} onClick={onEditFormEmployeeInfoModalOpen}>
           <BsPencil />
         </Box>
       </Tooltip>
+
+      {isEditFormEmployeeInfoModalOpen && (
+        <FormEmployeeInfoModal
+          isOpen={isEditFormEmployeeInfoModalOpen}
+          onClose={onEditFormEmployeeInfoModalClose}
+          isEditingEmployeeAndData={employeeData}
+        />
+      )}
 
       <Tooltip label="Remove Employee" {...tooltipStyle}>
         <Box
@@ -168,10 +198,22 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
             columnGap={{ base: '.35rem', md: '.5rem' }}
           >
             <Tooltip label="Info" {...tooltipStyle}>
-              <Box as="span" {...iconStyle}>
+              <Box
+                as="span"
+                {...iconStyle}
+                onClick={onDisplayEmployeeInfoModalOpen}
+              >
                 <AiOutlineInfoCircle />
               </Box>
             </Tooltip>
+
+            {isDisplayEmployeeInfoModalOpen && (
+              <DisplayEmployeeInfoModal
+                isOpen={isDisplayEmployeeInfoModalOpen}
+                onClose={onDisplayEmployeeInfoModalClose}
+                employeeDataToDisplay={employeeData}
+              />
+            )}
 
             {!isAddingTeam && isHeadOfDepartmentAndHasTeams && (
               <Tooltip label="Add Team" {...tooltipStyle}>
