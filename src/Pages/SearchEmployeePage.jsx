@@ -1,15 +1,22 @@
 import { useSelector } from 'react-redux';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Center, Spinner, Text } from '@chakra-ui/react';
 
 import { errorTextStyle } from '../globalStyle';
 import { EmployeeInfoCard } from '../Components';
 
 const SearchEmployeePage = () => {
-  const { filteredEmployeesAsPerSearch, searchQuery } = useSelector(
-    store => store.searchEmployee
-  );
+  const { filteredEmployeesAsPerSearch, searchQuery, isFiltering } =
+    useSelector(store => store.searchEmployee);
 
   const isFilteredEmployeesListEmpty = filteredEmployeesAsPerSearch.length < 1;
+
+  if (isFiltering) {
+    return (
+      <Center pt="2rem">
+        <Spinner />
+      </Center>
+    );
+  }
 
   if (!searchQuery.trim()) {
     return (

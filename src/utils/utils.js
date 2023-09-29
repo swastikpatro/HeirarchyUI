@@ -195,7 +195,7 @@ export const lowerizeAndStartsWith = ({ mainText, textToCheck }) =>
 export const lowerizeAndIncludes = ({ mainText, textToCheck }) =>
   mainText.toLowerCase().includes(textToCheck.toLowerCase());
 
-// start: end called in searchEmployeeSlice
+// end: all called in searchEmployeeSlice
 
 export const showToast = ({ toast, type, message }) => {
   toast({
@@ -220,3 +220,17 @@ export const hasEqualProperties = ({ stateData, dataObj }) => {
 
 export const validatePhoneNum = ({ pattern, phoneNumber }) =>
   pattern.test(phoneNumber);
+
+export const getFromLocalStorage = key => {
+  let data = localStorage.getItem(key);
+  try {
+    // if its an object, parse it and return, else throws a error.
+    return JSON.parse(data);
+  } catch {
+    return data;
+  }
+};
+
+export const setInLocalStorage = ({ key, value }) => {
+  localStorage.setItem(key, JSON.stringify(value));
+};

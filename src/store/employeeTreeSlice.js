@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { employeesDataLocal } from '../constants';
+import { LOCAL_STORAGE_KEYS, employeesDataLocal } from '../constants';
 
 import {
   addEmployeeNode,
@@ -8,16 +8,21 @@ import {
   changeTeam,
   deleteEmployeeNode,
   editTeamNode,
+  getFromLocalStorage,
   getTeams,
   promoteEmployee,
+  setInLocalStorage,
   updateEmployeeNode,
 } from '../utils/utils';
+
+const employeesData =
+  getFromLocalStorage(LOCAL_STORAGE_KEYS.EMPLOYEE_TREE) ?? employeesDataLocal;
 
 export const employeeTreeSlice = createSlice({
   name: 'employeeTree',
   initialState: {
-    employeesData: employeesDataLocal,
-    allTeams: getTeams(employeesDataLocal),
+    employeesData,
+    allTeams: getTeams(employeesData),
     idOfTeamToEdit: null,
   },
 
@@ -27,12 +32,22 @@ export const employeeTreeSlice = createSlice({
         node: state.employeesData,
         ...payload,
       });
+
+      setInLocalStorage({
+        key: LOCAL_STORAGE_KEYS.EMPLOYEE_TREE,
+        value: state.employeesData,
+      });
     },
 
     removeEmployeeFromTeam: (state, { payload }) => {
       deleteEmployeeNode({
         node: state.employeesData,
         ...payload,
+      });
+
+      setInLocalStorage({
+        key: LOCAL_STORAGE_KEYS.EMPLOYEE_TREE,
+        value: state.employeesData,
       });
     },
 
@@ -41,12 +56,22 @@ export const employeeTreeSlice = createSlice({
         node: state.employeesData,
         ...payload,
       });
+
+      setInLocalStorage({
+        key: LOCAL_STORAGE_KEYS.EMPLOYEE_TREE,
+        value: state.employeesData,
+      });
     },
 
     changeTeamOfEmployee: (state, { payload }) => {
       changeTeam({
         node: state.employeesData,
         ...payload,
+      });
+
+      setInLocalStorage({
+        key: LOCAL_STORAGE_KEYS.EMPLOYEE_TREE,
+        value: state.employeesData,
       });
     },
 
@@ -62,16 +87,31 @@ export const employeeTreeSlice = createSlice({
       editTeamNode({ node: state.employeesData, ...payload });
 
       state.allTeams = getTeams(state.employeesData);
+
+      setInLocalStorage({
+        key: LOCAL_STORAGE_KEYS.EMPLOYEE_TREE,
+        value: state.employeesData,
+      });
     },
 
     addTeamInfo: (state, { payload }) => {
       addTeamNode({ node: state.employeesData, teamInfoToAdd: payload });
 
       state.allTeams = getTeams(state.employeesData);
+
+      setInLocalStorage({
+        key: LOCAL_STORAGE_KEYS.EMPLOYEE_TREE,
+        value: state.employeesData,
+      });
     },
 
     updateEmployeeInfo: (state, { payload }) => {
       updateEmployeeNode({ node: state.employeesData, ...payload });
+
+      setInLocalStorage({
+        key: LOCAL_STORAGE_KEYS.EMPLOYEE_TREE,
+        value: state.employeesData,
+      });
     },
   },
 });
