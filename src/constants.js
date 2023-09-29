@@ -12,6 +12,8 @@ export const LOCAL_STORAGE_KEYS = {
   EMPLOYEE_TREE: 'EMPLOYEE_TREE',
 };
 
+export const DEBOUNCED_DELAY_MS = 250;
+
 export const employeesDataLocal = {
   id: 1,
   position: 'CEO',
