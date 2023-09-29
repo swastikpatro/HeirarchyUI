@@ -8,6 +8,7 @@ import {
   filterEmployeesOnSearch,
   updateSearchQuery,
 } from '../store/searchEmployeeSlice';
+import { DEBOUNCED_DELAY_MS } from '../constants';
 
 const SearchBar = () => {
   const searchQueryFromStore = useSelector(
@@ -32,7 +33,7 @@ const SearchBar = () => {
       }
 
       dispatch(filterEmployeesOnSearch());
-    }, 250);
+    }, DEBOUNCED_DELAY_MS);
 
     return () => {
       clearTimeout(timer);

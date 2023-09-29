@@ -1,15 +1,30 @@
+export const PHONE_REGEX = /^\+91-\d{10}$/;
+
+export const DEBOUNCED_DELAY_MS = 250;
+
 export const TOAST_TYPE = {
   Success: 'success',
   Error: 'error',
   Warning: 'warning',
   Info: 'info',
 };
-
-export const PHONE_REGEX = /^\+91-\d{10}$/;
-
 export const LOCAL_STORAGE_KEYS = {
   SEARCH_QUERY: 'SEARCH_QUERY',
   EMPLOYEE_TREE: 'EMPLOYEE_TREE',
+};
+
+export const TOOLTIP_LABELS = {
+  PROMOTE_EMPLOYEE: 'Promote Employee',
+  UPDATE_EMPLOYEE_INFO: 'Update Employee Info',
+  REMOVE_EMPLOYEE: 'Remove Employee',
+  CHANGE_TEAM: 'Change Team',
+  INFO: 'Info',
+  ADD_TEAM: 'Add Team',
+  ADD_MEMBER: 'Add Member',
+  EDIT_TEAM_INFO: 'Edit Team Info',
+  UPDATE_TEAM: 'Update Team',
+  CLOSE_INPUT: 'Close Input',
+  CLEAR_INPUT: 'Clear Input',
 };
 
 export const employeesDataLocal = {
