@@ -7,6 +7,11 @@ export const TOAST_TYPE = {
 
 export const PHONE_REGEX = /^\+91-\d{10}$/;
 
+export const LOCAL_STORAGE_KEYS = {
+  SEARCH_QUERY: 'SEARCH_QUERY',
+  EMPLOYEE_TREE: 'EMPLOYEE_TREE',
+};
+
 export const employeesDataLocal = {
   id: 1,
   position: 'CEO',

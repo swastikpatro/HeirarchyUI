@@ -1,16 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   getAllEmployeesFromTree,
+  getFromLocalStorage,
   lowerizeAndIncludes,
   lowerizeAndStartsWith,
+  setInLocalStorage,
 } from '../utils/utils';
+
+import { LOCAL_STORAGE_KEYS } from '../constants';
+
+const searchQuery = getFromLocalStorage(LOCAL_STORAGE_KEYS.SEARCH_QUERY) ?? '';
 
 export const searchEmployeeSlice = createSlice({
   name: 'searchEmployee',
   initialState: {
     allEmployeesList: [],
     filteredEmployeesAsPerSearch: [],
-    searchQuery: '',
+    searchQuery,
+    isFiltering: !!searchQuery,
   },
   reducers: {
     updateAllEmployeesList: (state, { payload: employeesTree }) => {
@@ -20,14 +27,28 @@ export const searchEmployeeSlice = createSlice({
 
     updateSearchQuery: (state, { payload: payloadSearchText }) => {
       state.searchQuery = payloadSearchText;
+      state.isFiltering = true;
+
+      setInLocalStorage({
+        key: LOCAL_STORAGE_KEYS.SEARCH_QUERY,
+        value: state.searchQuery.trim(),
+      });
     },
 
     clearSearchQuery: state => {
       state.searchQuery = '';
+      state.filteredEmployeesAsPerSearch = [];
+      state.isFiltering = false;
+
+      setInLocalStorage({
+        key: LOCAL_STORAGE_KEYS.SEARCH_QUERY,
+        value: state.searchQuery,
+      });
     },
 
     filterEmployeesOnSearch: state => {
       const trimmedStateSearchText = state.searchQuery.trim();
+      state.isFiltering = false;
 
       if (!trimmedStateSearchText) {
         state.filteredEmployeesAsPerSearch = [];
