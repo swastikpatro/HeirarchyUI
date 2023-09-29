@@ -25,6 +25,7 @@ import {
 import { updateIdOfTeamToEdit } from '../store/employeeTreeSlice';
 
 import FormEmployeeInfoModal from './FormEmployeeInfoModal';
+import { TOOLTIP_LABELS } from '../constants';
 
 const Team = ({ teamData }) => {
   const { id: teamId, teamName, department, employeesUnder } = teamData;
@@ -53,7 +54,7 @@ const Team = ({ teamData }) => {
             display={'flex'}
             columnGap={{ base: '.35rem', md: '.5rem' }}
           >
-            <Tooltip label="Add Member" {...tooltipStyle}>
+            <Tooltip label={TOOLTIP_LABELS.ADD_MEMBER} {...tooltipStyle}>
               <Box
                 as="span"
                 {...iconStyle}
@@ -74,7 +75,7 @@ const Team = ({ teamData }) => {
               />
             )}
 
-            <Tooltip label="Edit Info" {...tooltipStyle}>
+            <Tooltip label={TOOLTIP_LABELS.EDIT_TEAM_INFO} {...tooltipStyle}>
               <Box
                 as="span"
                 {...iconStyle}

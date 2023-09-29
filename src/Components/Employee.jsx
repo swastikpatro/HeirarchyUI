@@ -25,7 +25,7 @@ import {
   tooltipStyle,
 } from '../globalStyle';
 import { showToast } from '../utils/utils';
-import { TOAST_TYPE } from '../constants';
+import { TOAST_TYPE, TOOLTIP_LABELS } from '../constants';
 
 import {
   closeTeamEditForm,
@@ -42,6 +42,7 @@ import DisplayEmployeeInfoModal from './DisplayEmployeeInfoModal';
 const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
   const dispatch = useDispatch();
   const toast = useToast();
+
   const {
     isOpen: isDisplayEmployeeInfoModalOpen,
     onOpen: onDisplayEmployeeInfoModalOpen,
@@ -143,13 +144,13 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
 
   const uiForMembersJSX = (
     <>
-      <Tooltip label="Promote Employee" {...tooltipStyle}>
+      <Tooltip label={TOOLTIP_LABELS.PROMOTE_EMPLOYEE} {...tooltipStyle}>
         <Box as="span" {...iconStyle} onClick={handlePromoteMember}>
           <HiArrowNarrowUp />
         </Box>
       </Tooltip>
 
-      <Tooltip label="Update Employee Info" {...tooltipStyle}>
+      <Tooltip label={TOOLTIP_LABELS.UPDATE_EMPLOYEE_INFO} {...tooltipStyle}>
         <Box as="span" {...iconStyle} onClick={onEditFormEmployeeInfoModalOpen}>
           <BsPencil />
         </Box>
@@ -163,7 +164,7 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
         />
       )}
 
-      <Tooltip label="Remove Employee" {...tooltipStyle}>
+      <Tooltip label={TOOLTIP_LABELS.REMOVE_EMPLOYEE} {...tooltipStyle}>
         <Box
           as="span"
           {...iconStyle}
@@ -175,7 +176,7 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
       </Tooltip>
 
       <MenuTeamChange
-        tooltipLabel="Change Team"
+        tooltipLabel={TOOLTIP_LABELS.CHANGE_TEAM}
         availableTeamsToMove={availableTeamsToMove}
         idOfCurrentTeam={teamId}
         employeeObj={employeeData}
@@ -197,7 +198,7 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
             display={'flex'}
             columnGap={{ base: '.35rem', md: '.5rem' }}
           >
-            <Tooltip label="Info" {...tooltipStyle}>
+            <Tooltip label={TOOLTIP_LABELS.INFO} {...tooltipStyle}>
               <Box
                 as="span"
                 {...iconStyle}
@@ -216,7 +217,7 @@ const Employee = ({ employeeData, teamId, hasOneOrNoMemberInTeam }) => {
             )}
 
             {!isAddingTeam && isHeadOfDepartmentAndHasTeams && (
-              <Tooltip label="Add Team" {...tooltipStyle}>
+              <Tooltip label={TOOLTIP_LABELS.ADD_TEAM} {...tooltipStyle}>
                 <Box onClick={toggleIsAddingTeam} as="span" {...iconStyle}>
                   <AiOutlinePlusCircle />
                 </Box>

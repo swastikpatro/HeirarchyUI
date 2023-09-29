@@ -8,7 +8,7 @@ import { Box, Card, Input, Text, Tooltip, useToast } from '@chakra-ui/react';
 
 import { CgClose } from 'react-icons/cg';
 import { HiCheck } from 'react-icons/hi';
-import { BsBoxArrowLeft } from 'react-icons/bs';
+import { GrRefresh } from 'react-icons/gr';
 
 import {
   bottomTextStyles,
@@ -26,7 +26,7 @@ import {
 
 import Employee from './Employee';
 import { showToast } from '../utils/utils';
-import { TOAST_TYPE } from '../constants';
+import { TOAST_TYPE, TOOLTIP_LABELS } from '../constants';
 
 const TeamForm = ({
   isAddingTeamAndData = null,
@@ -159,7 +159,11 @@ const TeamForm = ({
             columnGap={{ base: '.35rem', md: '.5rem' }}
           >
             <Tooltip
-              label={`${isEditingTeamAndData ? 'Update' : 'Add'} Team`}
+              label={
+                isEditingTeamAndData
+                  ? TOOLTIP_LABELS.UPDATE_TEAM
+                  : TOOLTIP_LABELS.ADD_TEAM
+              }
               {...tooltipStyle}
             >
               <Box onClick={handleCheck} as="span" {...iconStyle}>
@@ -167,15 +171,15 @@ const TeamForm = ({
               </Box>
             </Tooltip>
 
-            <Tooltip label="Close Input" {...tooltipStyle}>
+            <Tooltip label={TOOLTIP_LABELS.CLOSE_INPUT} {...tooltipStyle}>
               <Box onClick={closeInput} as="span" {...iconStyle}>
-                <BsBoxArrowLeft />
+                <CgClose />
               </Box>
             </Tooltip>
 
-            <Tooltip label="Clear Input" {...tooltipStyle}>
+            <Tooltip label={TOOLTIP_LABELS.CLEAR_INPUT} {...tooltipStyle}>
               <Box onClick={clearInput} as="span" {...iconStyle}>
-                <CgClose />
+                <GrRefresh />
               </Box>
             </Tooltip>
           </Box>
