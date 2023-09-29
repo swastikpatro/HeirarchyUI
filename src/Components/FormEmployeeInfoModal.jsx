@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useRef, useState } from 'react';
 
@@ -45,6 +45,9 @@ const FormEmployeeInfoModal = ({
   const initialRef = useRef(null);
   const toast = useToast();
   const dispatch = useDispatch();
+  const allEmployeesListFromStore = useSelector(
+    store => store.searchEmployee.allEmployeesList
+  );
 
   const initialState = {
     employeeName: isEditingEmployeeAndData?.employeeInfo.employeeName ?? '',
@@ -76,7 +79,7 @@ const FormEmployeeInfoModal = ({
         !value ||
         validatePhoneNum({
           pattern: PHONE_REGEX,
-          phoneNumber: value,
+          phoneNumber: value.trim(),
         });
 
       setIsValidPhoneNumber(isEmptyOrValidPhoneValue);
@@ -94,6 +97,11 @@ const FormEmployeeInfoModal = ({
       (acc, currKey) => {
         acc[currKey] = employeeInfoInputs[currKey].trim();
 
+        if (currKey === 'employeeEmail') {
+          // gmail ids are case-insensitive
+          acc[currKey] = acc[currKey].toLowerCase();
+        }
+
         if (!acc[currKey]) {
           isAnyInputsEmpty = true;
         }
@@ -102,6 +110,29 @@ const FormEmployeeInfoModal = ({
       },
       {}
     );
+
+    const { isMailAreadyExists, isPhoneAlreadyExists } =
+      allEmployeesListFromStore.reduce(
+        (acc, { id, employeeInfo: { employeePhone, employeeEmail } }) => {
+          if (
+            !!isEditingEmployeeAndData &&
+            id === isEditingEmployeeAndData.id
+          ) {
+            return acc;
+          }
+
+          acc.isPhoneAlreadyExists =
+            employeePhone === trimmedEmployeeInfoInputs.employeePhone ||
+            acc.isPhoneAlreadyExists;
+
+          acc.isMailAreadyExists =
+            employeeEmail === trimmedEmployeeInfoInputs.employeeEmail ||
+            acc.isMailAreadyExists;
+
+          return acc;
+        },
+        { isMailAreadyExists: false, isPhoneAlreadyExists: false }
+      );
 
     if (isAnyInputsEmpty) {
       showToast({
@@ -120,11 +151,28 @@ const FormEmployeeInfoModal = ({
       });
       return;
     }
+    if (isMailAreadyExists) {
+      showToast({
+        toast,
+        type: TOAST_TYPE.Error,
+        message: 'Email Already Exists. Try different.',
+      });
+      return;
+    }
+
+    if (isPhoneAlreadyExists) {
+      showToast({
+        toast,
+        type: TOAST_TYPE.Error,
+        message: 'Phone Already Exists. Try different.',
+      });
+      return;
+    }
 
     if (isEditingEmployeeAndData) {
       if (
         hasEqualProperties({
-          stateData: employeeInfoInputs,
+          stateData: trimmedEmployeeInfoInputs,
           dataObj: isEditingEmployeeAndData.employeeInfo,
         })
       ) {
