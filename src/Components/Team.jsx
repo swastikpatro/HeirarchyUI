@@ -9,7 +9,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
-import { AiOutlineFilter, AiOutlinePlusCircle } from 'react-icons/ai';
+import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { BsPencil } from 'react-icons/bs';
 
 import Employee from './Employee';
@@ -83,12 +83,6 @@ const Team = ({ teamData }) => {
                 }}
               >
                 <BsPencil />
-              </Box>
-            </Tooltip>
-
-            <Tooltip label="Filter Employee" {...tooltipStyle}>
-              <Box as="span" {...iconStyle}>
-                <AiOutlineFilter />
               </Box>
             </Tooltip>
           </Box>

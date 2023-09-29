@@ -5,6 +5,12 @@ export const ellipsisStyle = {
   textOverflow: 'ellipsis',
 };
 
+export const sectionCenter = {
+  w: '90vw',
+  maxW: '1280px',
+  mx: 'auto',
+};
+
 export const headingStyles = {
   ...ellipsisStyle,
   fontSize: 'lg',
@@ -44,4 +50,42 @@ export const bottomTextStyles = {
   fontStyle: 'italic',
   color: 'gray.600',
   letterSpacing: '1px',
+};
+
+export const errorTextStyle = {
+  fontSize: { base: 'md', md: 'lg' },
+  color: 'red.500',
+  letterSpacing: 'wider',
+};
+
+export const navStyles = {
+  h: { base: '4rem', md: '5rem' },
+  boxShadow: 'lg',
+  pos: 'fixed',
+  top: '0',
+  left: '0',
+  w: '100vw',
+  display: 'grid',
+  placeItems: 'center',
+  zIndex: '100',
+  backdropFilter: 'blur(10px)',
+};
+
+export const linkToButtonStyles = {
+  bg: 'blue.500',
+  color: 'white',
+  borderRadius: 'lg',
+  py: '.5rem',
+  w: '6rem',
+  display: 'flex',
+  mx: 'auto',
+  justifyContent: 'center',
+  transition: 'all .3s linear',
+  sx: {
+    _hover: {
+      textDecor: 'none',
+      boxShadow: { md: 'lg' },
+      bg: { md: 'blue.600' },
+    },
+  },
 };

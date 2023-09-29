@@ -1,39 +1,24 @@
-import React from 'react';
-import { Box, Heading } from '@chakra-ui/react';
-import Employee from './Components/Employee';
-import { useSelector } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
 
-const headingStyles = {
-  fontSize: '2xl',
-  textAlign: 'center',
-  letterSpacing: '1.2px',
-  mb: '2rem',
-};
+import { Box } from '@chakra-ui/react';
 
-const pageStyles = {
-  pt: '1rem',
-  pb: '2rem',
-};
-
-const sectionCenter = {
-  w: '90vw',
-  maxW: '1280px',
-  mx: 'auto',
-};
+import { sectionCenter } from './globalStyle';
+import { SharedLayout, Home, SearchEmployeePage, ErrorPage } from './Pages';
 
 const App = () => {
-  const employeeTree = useSelector(state => state.employeeTree.employeesData);
-
   return (
-    <Box as="section" {...pageStyles}>
-      <Heading as="h1" {...headingStyles}>
-        Hierarchy UI
-      </Heading>
-
+    <>
       <Box as="main" {...sectionCenter}>
-        <Employee employeeData={employeeTree} />
+        <Routes>
+          <Route path="/" element={<SharedLayout />}>
+            <Route index element={<Home />} />
+            <Route path="search" element={<SearchEmployeePage />} />
+          </Route>
+
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
       </Box>
-    </Box>
+    </>
   );
 };
 

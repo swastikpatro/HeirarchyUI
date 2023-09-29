@@ -162,6 +162,41 @@ export const addTeamNode = ({ node, teamInfoToAdd }) => {
 
 // end: all called in employeeTreeSlice
 
+// start: all called in searchEmployeeSlice
+
+export const getAllEmployeesFromTree = tree => {
+  let allEmployees = [];
+
+  const extractEmployeesRecursive = node => {
+    const isEmployeeNode = 'employeeInfo' in node;
+
+    const employeesListElseTeamsList =
+      node.employeesUnder.length < 1 && !!node?.teamsUnder
+        ? node.teamsUnder
+        : node.employeesUnder;
+
+    if (isEmployeeNode) {
+      allEmployees.push(node);
+    }
+
+    employeesListElseTeamsList.forEach(singleNode => {
+      extractEmployeesRecursive(singleNode);
+    });
+  };
+
+  extractEmployeesRecursive(tree);
+
+  return allEmployees;
+};
+
+export const lowerizeAndStartsWith = ({ mainText, textToCheck }) =>
+  mainText.toLowerCase().startsWith(textToCheck.toLowerCase());
+
+export const lowerizeAndIncludes = ({ mainText, textToCheck }) =>
+  mainText.toLowerCase().includes(textToCheck.toLowerCase());
+
+// start: end called in searchEmployeeSlice
+
 export const showToast = ({ toast, type, message }) => {
   toast({
     title: message,
