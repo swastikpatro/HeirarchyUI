@@ -6,7 +6,7 @@ Gives Hierarchical UI for a company that shows all the employees.
 
 ```
 $ git clone https://github.com/swastikpatro/HeirarchyUI.git
-$ cd heirarchy-ui/
+$ cd HeirarchyUI/
 $ npm install
 $ npm start
 ```
@@ -14,6 +14,21 @@ $ npm start
 ## **Live Link :**
 
 [Hierarchy UI](https://heirarchy-ui.vercel.app/)
+
+## Screenshots: 
+
+- Hierarchy (Destktop)
+![image](https://github.com/swastikpatro/HeirarchyUI/assets/113245457/03fbad2d-f027-4f0e-9e70-a2779bc58393)
+![image](https://github.com/swastikpatro/HeirarchyUI/assets/113245457/b0dcce61-a77d-4bcf-9982-3615ecf8ac62)
+
+
+- Hierarchy (Mobile)
+![image](https://github.com/swastikpatro/HeirarchyUI/assets/113245457/0f4caeea-54b3-419f-88c5-1d454582f7a7)
+
+- Search (Desktop)
+![image](https://github.com/swastikpatro/HeirarchyUI/assets/113245457/456e876a-8b8e-417e-891d-bfa3bcf2988e)
+
+
 
 ## **Features -**
 
